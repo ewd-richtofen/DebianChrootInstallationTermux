@@ -1,17 +1,39 @@
 #!bin/bash
 
+prompy() {
+	local user_input
+	local default="${1:-/data/local/rootfs/debian12/tmp}"
+
+	while true; do
+		echo "[Default:$default]" >&2
+		read -p ": " user_input
+
+		if [ -n "$user_input" ]; then
+			break
+		
+		elif [ -z "$user_input" ]; then
+			user_input="$default"
+			break
+		
+		fi
+	
+	done
+
+	echo "$user_input"
+
+}
+
 printf "[ This programs will create start-debian.sh ]\n"
 printf "\n"
 
 # Input initial info from user
-printf "Please input 'tmp' directory from rootfs!\n"
-printf "Default location is /data/local/rootf/debian12/tmp\n"
-read -r -p ": " tmp_location
+printf "Please enter /tmp location!/n"
+tmp_location=$(prompy)
 printf "\n"
 
-printf "Please input 'debu.sh' location!\n"
-printf "Default location is /data/local/rootf/debu.sh\n"
-read -r -p ": " run_shell
+printf "Please enter /debu.sh location!\n"
+run_shell=$(prompy "/data/local/rootf/debu.sh")
+printf "\n"
 
 run_file=start-debian.sh
 

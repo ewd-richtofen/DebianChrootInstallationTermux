@@ -3,7 +3,7 @@
 echo "--------------------------------------"
 echo "||| CHROOT INSTALLATION ON ANDROID |||"
 echo "--------------------------------------"
-echo -e "\n"
+printf "\n"
 
 ROOTFS_PATH="/data/local/rootfs/"
 
@@ -89,7 +89,7 @@ do
 			break
 
 		else
-			echo -e "\n\e[1;32[!] The directory dosn't exist, Process downloading...\e[0m"
+			printf "\n\e[1;32[!] The directory dosn't exist, Process downloading...\e[0m\n"
             mkdir debian12
         	cd debian12
 			wget https://github.com/LinuxDroidMaster/Termux-Desktops/releases/download/Debian/debian12-arm64.tar.gz
@@ -195,7 +195,7 @@ EOF
     elif [ "$user_input" -eq 3 ]; then
         echo "[3] selected, process the url with wget to download the files!"
         cd /data/local/rootfs
-        echo -e "\nBedore that, if your rootfs in directory, please input [Directory Name]"
+        printf "\nBedore that, if your rootfs in directory, please input [Directory Name]\n"
         echo "if not in directory, please input [N]"
         read -p ": " user_dir
 
@@ -211,15 +211,15 @@ EOF
 	while true
 	do
 
-		echo -e "\e[1;33m[!] Checking the directory...\e[0m"
+		printf "\e[1;33m[!] Checking the directory...\e[0m\n"
 		
 		if [-d "/data/local/rootfs/$user_dir" ]; then
-			echo -e "\n\e[1;33m[!] The directory are exist.\e[0m"
+			printf "\n\e[1;33m[!] The directory are exist.\e[0m\n"
 			
 			break
 
 		else
-			echo -e "\n\e[1;32m[!] The directory dosn\'t exist, Process downloading...\e[0m"
+			printf "\n\e[1;32m[!] The directory dosn\'t exist, Process downloading...\e[0m\n"
 			echo "Please input the url!"
 			read -p ": " url
 			wget $url
@@ -309,11 +309,11 @@ busybox chroot $debp /bin/su - root -c '\
 	apt install dbus-x11 -y; \
 	echo -e "\e[1;32mThe initial install has finished!\e[0m"'
 
-echo -e "\n"
-echo -e "\e[0;31mPlease input your username"
+printf "\n"
+printf "\e[0;31mPlease input your username!\n"
 read -r -p "username: " username
 
-busybox chroot $debp /bin/su - root -c 'adduser $username'
+busybox chroot $debp /bin/su - root -c "adduser $username"
 
 while true
 do
@@ -375,7 +375,7 @@ done
 while true
 do
 
-    echo -e "\nDo you want to create debr.sh for user, and DE version?"
+    printf "\nDo you want to create debr.sh for user, and DE version?\n"
     read -r -p "[y/N]: " user_input
 
     if [ "$user_input" = "y" ] || [ -z "$user_input" ]; then
@@ -393,7 +393,7 @@ do
             echo "busybox chroot \$debp /bin/su - $username -c 'export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session dwm'" >> debu.sh
 
         else
-            echo -e "Just user without DE\n"
+            printf "Just user without DE\n"
             echo "busybox chroot \$debp /bin/su - $username" >> debu.sh
 
         fi
@@ -401,18 +401,18 @@ do
         break
     
     elif [ "$user_input" = "N" ]; then
-        echo -e "You can modified the debr.sh to add user and DE you want manualy."
+        echo "You can modified the debr.sh to add user and DE you want manualy."
         
 	break
    
     else
-        echo -e "Invalid input, please input [y/N]\n"
+        print "Invalid input, please input [y/N]\n"
     
     fi
 
 done
 
-echo -e "\n"
+printf "\n\n"
 echo "-----------------------------"
 echo "||| INSTALLATION COMPLETE |||"
 echo "-----------------------------"
