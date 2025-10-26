@@ -1,8 +1,8 @@
 #!/bin/sh
 
-echo -e "++++++++++++++++++++++++++++++++++++++"
+echo -e "--------------------------------------"
 echo -e "||| CHROOT INSTALLATION ON ANDROID |||"
-echo -e "++++++++++++++++++++++++++++++++++++++"
+echo -e "--------------------------------------"
 echo -e "\n"
 
 ROOTFS_PATH="/data/local/rootfs/"
@@ -136,7 +136,7 @@ EOF
         break
     
     elif [ "$user_input" -eq 2 ]; then
-        echo -e "[2] is selected, please wait the download process!\n"
+        echo -e "[2] is selected, please wait the download process!"
         cd /data/local/rootfs
 
         while true
@@ -219,7 +219,7 @@ EOF
 			break
 
 		else
-			echo -e "\n\e[1;32[!] The directory dosn't exist, Process downloading...\e[0m"
+			echo -e "\n\e[1;32m[!] The directory dosn\'t exist, Process downloading...\e[0m"
 			echo -e "Please input the url!"
 			read -p ": " url
 			wget $url
@@ -236,7 +236,7 @@ EOF
 				break
 
 			    else
-				print "The name of files is incorrect, please input the right name\n"
+				echo -e "The name of files is incorrect, please input the right name"
 			    
 			    fi
 			
@@ -375,7 +375,7 @@ done
 while true
 do
 
-    echo -e "\Do you want to create debr.sh for user, and DE version?"
+    echo -e "\nDo you want to create debr.sh for user, and DE version?"
     read -r -p "[y/N]: " user_input
 
     if [ "$user_input" = "y" ] || [ -z "$user_input" ]; then
