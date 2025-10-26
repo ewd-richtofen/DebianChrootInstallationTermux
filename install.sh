@@ -1,16 +1,9 @@
 #!/bin/sh
 
-<<<<<<< HEAD
-printf "=======================================n"
-printf "||| CHROOT INSTALLATION ON ANDROID |||\n"
-printf "======================================\n"
-printf "\n"
-=======
-echo -e "--------------------------------------"
+echo -e "++++++++++++++++++++++++++++++++++++++"
 echo -e "||| CHROOT INSTALLATION ON ANDROID |||"
-echo -e "--------------------------------------"
+echo -e "++++++++++++++++++++++++++++++++++++++"
 echo -e "\n"
->>>>>>> 3700f48 (fix exit argument)
 
 ROOTFS_PATH="/data/local/rootfs/"
 
