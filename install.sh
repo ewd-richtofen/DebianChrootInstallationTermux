@@ -307,6 +307,8 @@ busybox chroot $debp /bin/su - root -c '\
 	apt install sudo nano vim git curl wget -y; \
 	apt install adduser -y; \
 	apt install dbus-x11 -y; \
+    apt install locales fonts-noto-cjk -y; \
+    apt install unzip xz-utils -y; \
 	echo -e "\e[1;32mThe initial install has finished!\e[0m"'
 
 printf "\n"
@@ -384,13 +386,13 @@ do
         sed -i '22s/^/#/' debu.sh
         
         if [ "$user_choice" -eq 1 ]; then
-            echo "busybox chroot \$debp /bin/su - $username -c 'export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session startxfce4'" >> debu.sh
+            echo "busybox chroot \$debp /bin/su - $username -c 'USER_UID=$(id -u); export XDG_RUNTIME_DIR="/tmp/run-user/$USER_UID"; mkdir -p "$XDG_RUNTIME_DIR" && chmod 0700 "$XDG_RUNTIME_DIR"; export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session startxfce4'" >> debu.sh
         
         elif [ "$user_choice" -eq 2 ]; then
-            echo "busybox chroot \$debp /bin/su - $username -c 'export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session startplasma-x11'" >> debu.sh
+            echo "busybox chroot \$debp /bin/su - $username -c 'USER_UID=$(id -u); export XDG_RUNTIME_DIR="/tmp/run-user/$USER_UID"; mkdir -p "$XDG_RUNTIME_DIR" && chmod 0700 "$XDG_RUNTIME_DIR"; export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session startplasma-x11'" >> debu.sh
 
         elif [ "$user_choice" -eq 0 ]; then
-            echo "busybox chroot \$debp /bin/su - $username -c 'export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session dwm'" >> debu.sh
+            echo "busybox chroot \$debp /bin/su - $username -c 'USER_UID=$(id -u); export XDG_RUNTIME_DIR="/tmp/run-user/$USER_UID"; mkdir -p "$XDG_RUNTIME_DIR" && chmod 0700 "$XDG_RUNTIME_DIR"; export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session dwm'" >> debu.sh
 
         else
             printf "Just user without DE\n"
