@@ -17,11 +17,12 @@ tsu # Can use su too, but I recommend tsu over su
 sh install.sh
 ```
 
-Third run the run-maker.sh to generate <b>start-debian.sh</b>
+Third run the <b>start-debian.sh</b>
 
 ```
 exit # Exit from super user enviroment
-sh run-maker.sh
+chmod +x start-debian.sh
+./start-debian.sh
 ```
 
 # Fix error dbus permission
