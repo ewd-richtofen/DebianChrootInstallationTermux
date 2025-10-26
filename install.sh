@@ -340,33 +340,33 @@ done
 while true
 do
 
-    echo -e "You want install Desktop Enviroment? [N] for no"
-    echo -e "List:"
-    echo -e "[1] XFCE4 (recommended)"
-    echo -e "[2] KDE PLASMA (recommended middle class phone)"
-    echo -e "[0] Dynamic Window Manager DWM (not recommended, light, server GUI use)"
+    echo "You want install Desktop Enviroment? [N] for no"
+    echo "List:"
+    echo "[1] XFCE4 (recommended)"
+    echo "[2] KDE PLASMA (recommended middle class phone)"
+    echo "[0] Dynamic Window Manager DWM (not recommended, light, server GUI use)"
     read -p ": " user_choice
 
     if [ "$user_choice" -eq 1 ]; then
         busybox chroot $debp /bin/su - root -c 'apt install xfce4 xfce4-goodies -y'
-        echo -e "XFCE4 Ready to use"
+        echo "XFCE4 Ready to use"
         
-	break
+	    break
     
     elif [ "$user_choice" -eq 2 ]; then
         busybox chroot $debp /bin/su - root -c 'apt install kde-plasma-desktop -y'
-        echo -e "KDE PLASMA Ready to use"
+        echo "KDE PLASMA Ready to use"
         
-	break
+	    break
     
     elif [ "$user_choice" -eq 0 ]; then
         busybox chroot $debp /bin/su - root -c 'apt install make cmake gcc build-essential libx11-dev libxft-dev libxinerama-dev picom rofi nitrogen -y'
-        echo -e "\nThen just compiling the source code"
+        echo "Then just compiling the source code"
         
-	break
+	    break
     
     else
-        echo -e "The option input is not on list, please input the correct option"
+        echo "The option input is not on list, please input the correct option"
 
     fi
 
