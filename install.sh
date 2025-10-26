@@ -1,8 +1,8 @@
 #!/bin/sh
 
-echo -e "--------------------------------------"
-echo -e "||| CHROOT INSTALLATION ON ANDROID |||"
-echo -e "--------------------------------------"
+echo "--------------------------------------"
+echo "||| CHROOT INSTALLATION ON ANDROID |||"
+echo "--------------------------------------"
 echo -e "\n"
 
 ROOTFS_PATH="/data/local/rootfs/"
@@ -11,7 +11,7 @@ while true
 do
     
     # Make user input loop, determine the process
-    echo -e "Continue the process of installation rootfs? [y/N]"
+    echo "Continue the process of installation rootfs? [y/N]"
     read -p ": " user_input
 
     if [ "$user_input" = "y" ] || [ -z "$user_input" ]; then
@@ -20,12 +20,12 @@ do
 
     elif [ "$user_input" = "N" ]; then
         
-	    echo -e "Cancel the process installation!"
+	    echo "Cancel the process installation!"
         
 	    exit 1
     
     else
-	echo -e "Invalid input. Try again."
+	echo "Invalid input. Try again."
     
     fi
 
@@ -48,15 +48,15 @@ while true
 do
 
     # Checking the busybox is already installed, or not
-    echo -e "Checking the busybox module"
+    echo "Checking the busybox module"
 
     if command -v busybox >/dev/null 2>&1; then
-        echo -e "The busybox module already installed, process continue!"
+        echo "The busybox module already installed, process continue!"
         
-	break
+	    break
     
     else
-        echo -e "The busybox not installed, please install the busybox module frist!"
+        echo "The busybox not installed, please install the busybox module frist!"
         
 	exit 1
     
@@ -68,10 +68,10 @@ while true
 do
 
     # Select the rootf files from, or make the link directly
-    echo -e "Please select rootf from, to be install!"
-    echo -e "[1] Debian 12 arm64 rootfs \"LinuxDroidMaster\". (Recommended)"
-    echo -e "[2] Debian Trixie aarch64 rootfs \"termux/proot-distro\". (Test)"
-    echo -e "[?] I want the Debian rootfs from my url! (Test)"
+    echo "Please select rootf from, to be install!"
+    echo "[1] Debian 12 arm64 rootfs \"LinuxDroidMaster\". (Recommended)"
+    echo "[2] Debian Trixie aarch64 rootfs \"termux/proot-distro\". (Test)"
+    echo "[?] I want the Debian rootfs from my url! (Test)"
     read -p ": " user_input
 
     if [ "$user_input" -eq 1 ]; then
@@ -136,7 +136,7 @@ EOF
         break
     
     elif [ "$user_input" -eq 2 ]; then
-        echo -e "[2] is selected, please wait the download process!"
+        echo "[2] is selected, please wait the download process!"
         cd /data/local/rootfs
 
         while true
@@ -193,10 +193,10 @@ EOF
         break
 
     elif [ "$user_input" -eq 3 ]; then
-        echo -e "[3] selected, process the url with wget to download the files!"
+        echo "[3] selected, process the url with wget to download the files!"
         cd /data/local/rootfs
         echo -e "\nBedore that, if your rootfs in directory, please input [Directory Name]"
-        echo -e "if not in directory, please input [N]"
+        echo "if not in directory, please input [N]"
         read -p ": " user_dir
 
         if [ "$user_dir" = "N" ]; then
@@ -204,7 +204,7 @@ EOF
             cd /data/local/rootfs/debian12
         
         else
-            echo -e "$user_dir will be store on runner file"
+            echo "$user_dir will be store on runner file"
 
         fi
 	
@@ -214,13 +214,13 @@ EOF
 		echo -e "\e[1;33m[!] Checking the directory...\e[0m"
 		
 		if [-d "/data/local/rootfs/$user_dir" ]; then
-			echo -e "\n\e[1;33m[!] The directory are exist.\e[0m
+			echo -e "\n\e[1;33m[!] The directory are exist.\e[0m"
 			
 			break
 
 		else
 			echo -e "\n\e[1;32m[!] The directory dosn\'t exist, Process downloading...\e[0m"
-			echo -e "Please input the url!"
+			echo "Please input the url!"
 			read -p ": " url
 			wget $url
 
@@ -233,10 +233,10 @@ EOF
 
 			    if tar xpvf "$url_name" --numeric-owner; then
 			    
-				break
+				    break
 
 			    else
-				echo -e "The name of files is incorrect, please input the right name"
+				echo "The name of files is incorrect, please input the right name"
 			    
 			    fi
 			
@@ -248,8 +248,8 @@ EOF
         # Making chroot runner to debian rootfs
         run_file=debr.sh # r for root user
 
-        echo -e "#!/bin/sh\n" >> "$run_file"
-        echo -e "debp=\"/data/local/rootfs/""$user_dir"\""\n" >> "$run_file"
+        echo "#!/bin/sh" >> "$run_file"
+        echo -e "debp=\"/data/local/rootfs/$user_dir\"" >> "$run_file"
 
         cat << EOF >> "$run_file"
 # Fix setuid issue (Linux file permissions allows an executable to run with the effective user ID (EUID) of its owner)
@@ -277,7 +277,7 @@ EOF
         break
 
     else
-        echo -e "The option input is not on list, please input the correct option"
+        echo "The option input is not on list, please input the correct option"
     
     fi
 
@@ -309,7 +309,7 @@ busybox chroot $debp /bin/su - root -c '\
 	apt install dbus-x11 -y; \
 	echo -e "\e[1;32mThe initial install has finished!\e[0m"'
 
-printf "\n"
+echo -e "\n"
 echo -e "\e[0;31mPlease input your username"
 read -r -p "username: " username
 
@@ -318,20 +318,20 @@ busybox chroot $debp /bin/su - root -c 'adduser $username'
 while true
 do
 
-    echo -e "Are you want to add user to sudoers? [y/N]"
+    echo "Are you want to add user to sudoers? [y/N]"
     read -p ": " user_input
 
     if [ "$user_input" = "y" ] || [ -z "$user_input" ]; then
         busybox chroot $debp /bin/su - root -c 'usermod -aG sudo $username'
         
-	break
+	    break
     
     elif [ "$user_input" = "N" ]; then
         
-	break
+	    break
     
     else
-        echo -e "Invalid input, please input [y/N]"
+        echo "Invalid input, please input [y/N]"
     
     fi
 
@@ -413,9 +413,9 @@ do
 done
 
 echo -e "\n"
-echo -e "-----------------------------"
-echo -e "||| INSTALLATION COMPLETE |||"
-echo -e "-----------------------------"
-echo -e "Please run the run-maker.sh to generate start-debian.sh enviroment"
+echo "-----------------------------"
+echo "||| INSTALLATION COMPLETE |||"
+echo "-----------------------------"
+echo "Please run the run-maker.sh to generate start-debian.sh enviroment"
 
 exit 0
