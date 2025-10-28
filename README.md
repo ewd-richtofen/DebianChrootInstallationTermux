@@ -21,7 +21,8 @@ Third run the start-conf.sh to generate <b>start-debian.sh</b>
 
 ```
 exit # Exit from super user enviroment
-sh run-maker.sh
+chmod +x start-debian.sh
+./start-debian.sh
 ```
 
 # Fix error dbus permission
