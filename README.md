@@ -17,7 +17,7 @@ tsu # Can use su too, but I recommend tsu over su
 sh install.sh
 ```
 
-Third run the run-maker.sh to generate <b>start-debian.sh</b>
+Third run the start-conf.sh to generate <b>start-debian.sh</b>
 
 ```
 exit # Exit from super user enviroment

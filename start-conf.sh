@@ -66,6 +66,8 @@ pacmd load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymou
 su -c "sh $run_shell"
 EOF
 
+chmod +x start-debian.sh
+
 printf "Creating start-debian.sh has completed!\n"
 
 while true
