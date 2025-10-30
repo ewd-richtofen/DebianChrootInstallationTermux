@@ -30,7 +30,7 @@ printf "[ This programs will create start-debian.sh ]\n"
 printf "\n"
 
 # Input initial info from user
-printf "Please enter /tmp location!/n"
+printf "Please enter /tmp location!\n"
 tmp_location=$(prompy)
 printf "\n"
 
