@@ -293,12 +293,15 @@ else
 fi
 
 # Make correct permission for /tmp
-busybox chroot $debp /bin/su - root -c 'chmod 1777 /tmp'
+busybox chroot $debp /bin/su - root -c 'chmod -R 1777 /tmp'
 
 busybox chroot $debp /bin/su - root -c '\
 	echo "nameserver 1.1.1.1" > /etc/resolv.conf; \
 	echo "nameserver 8.8.8.8" >> /etc/resolv.conf; \
 	echo "127.0.0.1 localhost" > /etc/hosts'
+
+# Make correct permission for /tmp
+busybox chroot $debp /bin/su - root -c 'chmod -R 1777 /tmp'
 
 busybox chroot $debp /bin/su - root -c '\
 	apt update -y && apt upgrade -y; \

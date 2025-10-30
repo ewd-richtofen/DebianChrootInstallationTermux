@@ -35,7 +35,7 @@ tmp_location=$(prompy)
 printf "\n"
 
 printf "Please enter /debu.sh location!\n"
-run_shell=$(prompy "/data/local/rootf/debu.sh")
+run_shell=$(prompy "/data/local/rootfs/debu.sh")
 printf "\n"
 
 run_file=start-debian.sh
