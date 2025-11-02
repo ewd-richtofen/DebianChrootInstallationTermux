@@ -119,6 +119,9 @@ busybox mount --bind /sys \$debp/sys
 busybox mount --bind /proc \$debp/proc
 busybox mount -t devpts devpts \$debp/dev/pts
 
+# Fix /tmp permission issue
+busybox mount -t tmpfs -o mode=1777,size=256M tmpfs \$debp/tmp
+
 # /dev/shm for Electron apps
 mkdir \$debp/dev/shm
 busybox mount -t tmpfs -o size=256M tmpfs \$debp/dev/shm
@@ -175,6 +178,9 @@ busybox mount --bind /dev \$debp/dev
 busybox mount --bind /sys \$debp/sys
 busybox mount --bind /proc \$debp/proc
 busybox mount -t devpts devpts \$debp/dev/pts
+
+# Fix /tmp permission issue
+busybox mount -t tmpfs -o mode=1777,size=256M tmpfs \$debp/tmp
 
 # /dev/shm for Electron apps
 mkdir \$debp/dev/shm
@@ -260,6 +266,9 @@ busybox mount --bind /sys \$debp/sys
 busybox mount --bind /proc \$debp/proc
 busybox mount -t devpts devpts \$debp/dev/pts
 
+# Fix /tmp permission issue
+busybox mount -t tmpfs -o mode=1777,size=256M tmpfs \$debp/tmp
+
 # /dev/shm for Electron apps
 mkdir \$debp/dev/shm
 busybox mount -t tmpfs -o size=256M tmpfs \$debp/dev/shm
@@ -292,17 +301,24 @@ else
 
 fi
 
+# Fix permission issue when run this program
+busybox mount -o remount,dev,suid /data
+busybox mount --bind /dev \$debp/dev
+busybox mount --bind /sys \$debp/sys
+busybox mount --bind /proc \$debp/proc
+busybox mount -t devpts devpts \$debp/dev/pts
+busybox mount -t tmpfs -o mode=1777,size=256M tmpfs \$debp/tmp
+
 # Make correct permission for /tmp
 busybox chroot $debp /bin/su - root -c 'chmod -R 1777 /tmp'
 
+# Make dns and localhost (dns still don't work on certain device)
 busybox chroot $debp /bin/su - root -c '\
 	echo "nameserver 1.1.1.1" > /etc/resolv.conf; \
 	echo "nameserver 8.8.8.8" >> /etc/resolv.conf; \
 	echo "127.0.0.1 localhost" > /etc/hosts'
 
-# Make correct permission for /tmp
-busybox chroot $debp /bin/su - root -c 'chmod -R 1777 /tmp'
-
+# Install essential package
 busybox chroot $debp /bin/su - root -c '\
 	apt update -y && apt upgrade -y; \
 	apt install openssh-client openssh-server -y; \
@@ -365,7 +381,7 @@ do
 	    break
     
     elif [ "$user_choice" -eq 0 ]; then
-        busybox chroot $debp /bin/su - root -c 'apt install make cmake gcc build-essential libx11-dev libxft-dev libxinerama-dev picom rofi nitrogen -y'
+        busybox chroot $debp /bin/su - root -c 'apt install make cmake gcc build-initial libx11-dev libxft-dev libxinerama-dev picom rofi nitrogen -y'
         echo "Then just compiling the source code"
         
 	    break
