@@ -312,7 +312,7 @@ busybox chroot $debp /bin/su - root -c '\
 	apt install dbus-x11 -y; \
     apt install locales fonts-noto-cjk -y; \
     apt install unzip xz-utils -y; \
-	echo -e "\e[1;32mThe initial install has finished!\e[0m"'
+	echo -e "\e[1;32mThe essential install has finished!\e[0m"'
 
 printf "\n"
 printf "\e[0;31mPlease input your username!\n"
