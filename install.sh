@@ -381,7 +381,7 @@ do
 	    break
     
     elif [ "$user_choice" -eq 0 ]; then
-        busybox chroot $debp /bin/su - root -c 'apt install make cmake gcc build-initial libx11-dev libxft-dev libxinerama-dev picom rofi nitrogen -y'
+        busybox chroot $debp /bin/su - root -c 'apt install make cmake gcc build-essential libx11-dev libxft-dev libxinerama-dev picom rofi nitrogen -y'
         echo "Then just compiling the source code"
         
 	    break
