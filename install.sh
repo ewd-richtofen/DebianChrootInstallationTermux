@@ -119,9 +119,6 @@ busybox mount --bind /sys \$debp/sys
 busybox mount --bind /proc \$debp/proc
 busybox mount -t devpts devpts \$debp/dev/pts
 
-# Fix /tmp permission issue
-busybox mount -t tmpfs -o mode=1777,size=256M tmpfs \$debp/tmp
-
 # /dev/shm for Electron apps
 mkdir \$debp/dev/shm
 busybox mount -t tmpfs -o size=256M tmpfs \$debp/dev/shm
@@ -178,9 +175,6 @@ busybox mount --bind /dev \$debp/dev
 busybox mount --bind /sys \$debp/sys
 busybox mount --bind /proc \$debp/proc
 busybox mount -t devpts devpts \$debp/dev/pts
-
-# Fix /tmp permission issue
-busybox mount -t tmpfs -o mode=1777,size=256M tmpfs \$debp/tmp
 
 # /dev/shm for Electron apps
 mkdir \$debp/dev/shm
@@ -265,9 +259,6 @@ busybox mount --bind /dev \$debp/dev
 busybox mount --bind /sys \$debp/sys
 busybox mount --bind /proc \$debp/proc
 busybox mount -t devpts devpts \$debp/dev/pts
-
-# Fix /tmp permission issue
-busybox mount -t tmpfs -o mode=1777,size=256M tmpfs \$debp/tmp
 
 # /dev/shm for Electron apps
 mkdir \$debp/dev/shm
@@ -402,7 +393,7 @@ do
     if [ "$user_input" = "y" ] || [ -z "$user_input" ]; then
         cd /data/local/rootfs/
         cp debr.sh debu.sh # u for user
-        sed -i '25s/^/#/' debu.sh
+        sed -i '22s/^/#/' debu.sh
         
         if [ "$user_choice" -eq 1 ]; then
             echo "busybox chroot \$debp /bin/su - $username -c 'USER_UID=\$(id -u); export XDG_RUNTIME_DIR="/tmp/run-user/\$USER_UID"; mkdir -p "\$XDG_RUNTIME_DIR" && chmod 0700 "\$XDG_RUNTIME_DIR"; export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session startxfce4'" >> debu.sh

@@ -29,7 +29,7 @@ prompy() {
 printf "[ This programs will create start-debian.sh ]\n"
 printf "\n"
 
-# Input initial info from user
+# Input essential info from user
 printf "Please enter /tmp location!\n"
 tmp_location=$(prompy)
 printf "\n"
@@ -49,9 +49,9 @@ killall -9 termux-x11 Xwayland pulseaudio virgl_test_server_android termux-wake-
 ## Start Termux X11
 am start --user 0 -n com.termux.x11/com.termux.x11.MainActivity
 
-sudo busybox mount --bind $PREFIX/tmp $tmp_location
+sudo busybox mount --bind \$PREFIX/tmp $tmp_location
 
-XDG_RUNTIME_DIR=${TMPDIR} termux-x11 :0 -ac &
+XDG_RUNTIME_DIR=\${TMPDIR} termux-x11 :0 -ac &
 
 sleep 3
 
@@ -73,10 +73,10 @@ printf "Creating start-debian.sh has completed!\n"
 while true
 do
 	
-	printf "Is you want to install initial package from termux to run the debian on x11?\n"
+	printf "Is you want to install essential package from termux to run the debian on x11?\n"
 	read -r -p "[y/N]: " user_input
 	
-    # The initial package to make x11 server run properly
+    # The essential package to make x11 server run properly
 	if [ "$user_input" = "y" ] || [ -z "$user_input" ]; then
 		pkg install x11-repo -y
 		pkg install root-repo -y
