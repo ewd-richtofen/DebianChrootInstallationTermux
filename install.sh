@@ -396,13 +396,91 @@ do
         sed -i '22s/^/#/' debu.sh
         
         if [ "$user_choice" -eq 1 ]; then
-            echo "busybox chroot \$debp /bin/su - $username -c 'USER_UID=\$(id -u); export XDG_RUNTIME_DIR="/tmp/run-user/\$USER_UID"; mkdir -p "\$XDG_RUNTIME_DIR" && chmod 0700 "\$XDG_RUNTIME_DIR"; export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session startxfce4'" >> debu.sh
+            cat << EOF >> "debu.sh"
+
+while true; do
+
+    printf "\n"
+    printf "Start with X server or SSH only? \e[1;33m[Y (X server ON) / N (SSH only)]\e[0m"
+    read -p ": " user_input
+
+    if [ "\$user_input" == "Y" ] || [ "\$user_input" == "y" ] || [ "\$user_input" == "N" ] || [ "\$user_input" == "n" ] || [ -z "\$user_input" ]; then
+        break
+    
+    else
+        printf "\e[1;31mInput Invalid!"
+
+    fi
+
+done
+
+if [ "\$user_input" == "N" ] || [ "\$user_input" == "n" ]; then
+    busybox chroot \$debp /bin/su - root -c '/etc/init.d/ssh start'
+
+else
+    busybox chroot \$debp /bin/su - root -c '/etc/init.d/ssh start'
+    busybox chroot \$debp /bin/su - $username -c 'USER_UID=\$(id -u); export XDG_RUNTIME_DIR="/tmp/run-user/\$USER_UID"; mkdir -p "\$XDG_RUNTIME_DIR" && chmod 0700 "\$XDG_RUNTIME_DIR"; export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session startxfce4'
+
+fi
+EOF
         
         elif [ "$user_choice" -eq 2 ]; then
-            echo "busybox chroot \$debp /bin/su - $username -c 'USER_UID=\$(id -u); export XDG_RUNTIME_DIR="/tmp/run-user/\$USER_UID"; mkdir -p "\$XDG_RUNTIME_DIR" && chmod 0700 "\$XDG_RUNTIME_DIR"; export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session startplasma-x11'" >> debu.sh
+            cat << EOF >> "debu.sh"
+
+while true; do
+
+    printf "\n"
+    printf "Start with X server or SSH only? \e[1;33m[Y (X server ON) / N (SSH only)]\e[0m"
+    read -p ": " user_input
+
+    if [ "\$user_input" == "Y" ] || [ "\$user_input" == "y" ] || [ "\$user_input" == "N" ] || [ "\$user_input" == "n" ] || [ -z "\$user_input" ]; then
+        break
+    
+    else
+        printf "\e[1;31mInput Invalid!"
+
+    fi
+
+done
+
+if [ "\$user_input" == "N" ] || [ "\$user_input" == "n" ]; then
+    busybox chroot \$debp /bin/su - root -c '/etc/init.d/ssh start'
+
+else
+    busybox chroot \$debp /bin/su - root -c '/etc/init.d/ssh start'
+    busybox chroot \$debp /bin/su - $username -c 'USER_UID=\$(id -u); export XDG_RUNTIME_DIR="/tmp/run-user/\$USER_UID"; mkdir -p "\$XDG_RUNTIME_DIR" && chmod 0700 "\$XDG_RUNTIME_DIR"; export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session startplasma-x11'
+
+fi
+EOF
 
         elif [ "$user_choice" -eq 0 ]; then
-            echo "busybox chroot \$debp /bin/su - $username -c 'USER_UID=\$(id -u); export XDG_RUNTIME_DIR="/tmp/run-user/\$USER_UID"; mkdir -p "\$XDG_RUNTIME_DIR" && chmod 0700 "\$XDG_RUNTIME_DIR"; export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session dwm'" >> debu.sh
+            cat << EOF >> "debu.sh"
+
+while true; do
+
+    printf "\n"
+    printf "Start with X server or SSH only? \e[1;33m[Y (X server ON) / N (SSH only)]\e[0m"
+    read -p ": " user_input
+
+    if [ "\$user_input" == "Y" ] || [ "\$user_input" == "y" ] || [ "\$user_input" == "N" ] || [ "\$user_input" == "n" ] || [ -z "\$user_input" ]; then
+        break
+    
+    else
+        printf "\e[1;31mInput Invalid!"
+
+    fi
+
+done
+
+if [ "\$user_input" == "N" ] || [ "\$user_input" == "n" ]; then
+    busybox chroot \$debp /bin/su - root -c '/etc/init.d/ssh start'
+
+else
+    busybox chroot \$debp /bin/su - root -c '/etc/init.d/ssh start'
+    busybox chroot \$debp /bin/su - $username -c 'USER_UID=\$(id -u); export XDG_RUNTIME_DIR="/tmp/run-user/\$USER_UID"; mkdir -p "\$XDG_RUNTIME_DIR" && chmod 0700 "\$XDG_RUNTIME_DIR"; export DISPLAY=:0 && export PULSE_SERVER=127.0.0.1 && dbus-launch --exit-with-session dwm'
+
+fi
+EOF
 
         else
             printf "Just user without DE\n"
