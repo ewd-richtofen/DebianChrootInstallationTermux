@@ -43,27 +43,47 @@ run_file=start-debian.sh
 cat << EOF > "$run_file"
 #!/bin/bash
 
-# Kill all old prcoesses
-killall -9 termux-x11 Xwayland pulseaudio virgl_test_server_android termux-wake-lock
+while true; do
 
-## Start Termux X11
-am start --user 0 -n com.termux.x11/com.termux.x11.MainActivity
+	printf "\e[1;33m[GUI (y) / SSH only (n)]\e[0m\n:"
+	read user_input
 
-sudo busybox mount --bind \$PREFIX/tmp $tmp_location
+	if [ "\$user_input" =="y" ] || [ -z "\$user_input" ]; then
 
-XDG_RUNTIME_DIR=\${TMPDIR} termux-x11 :0 -ac &
+		# Kill all old prcoesses
+		killall -9 termux-x11 Xwayland pulseaudio virgl_test_server_android termux-wake-lock
 
-sleep 3
+		## Start Termux X11
+		am start --user 0 -n com.termux.x11/com.termux.x11.MainActivity
 
-# Start Pulse Audio of Termux
-pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1
-pacmd load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1
+		sudo busybox mount --bind \$PREFIX/tmp $tmp_location
 
-# Start virgl server
-#virgl_test_server_android &
+		XDG_RUNTIME_DIR=\${TMPDIR} termux-x11 :0 -ac &
 
-# Execute chroot Ubuntu script
-su -c "sh $run_shell"
+		sleep 3
+
+		# Start Pulse Audio of Termux
+		pulseaudio --start --load="module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1" --exit-idle-time=-1
+		pacmd load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 auth-anonymous=1
+
+		# Start virgl server
+		#virgl_test_server_android &
+
+		# Execute chroot script
+		su -c "sh $run_shell"
+
+	elif [ "\$user_input" =="n" ]; then
+
+		# Execute chroot script
+		su -c "sh $run_shell"
+
+	else
+
+		printf "\e[1;31mInvalid Input\e[0m\n"
+
+	fi
+
+done
 EOF
 
 chmod +x start-debian.sh
